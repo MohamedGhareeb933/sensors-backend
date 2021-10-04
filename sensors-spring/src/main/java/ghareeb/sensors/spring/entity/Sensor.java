@@ -1,14 +1,13 @@
 package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity(name = "sensor")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Sensor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 

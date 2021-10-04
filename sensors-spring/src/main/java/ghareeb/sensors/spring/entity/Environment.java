@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "environment")
+@Entity(name = "environment")
 public class Environment {
 
     @Id
@@ -75,5 +74,15 @@ public class Environment {
 
     public void setLocations(Set<Location> locations) {
         this.locations = locations;
+    }
+
+    public void add(Location location) {
+        if (location != null ) {
+            if (locations == null) {
+                locations = new HashSet<>();
+            }
+            locations.add(location);
+            location.setEnvironment(this);
+        }
     }
 }

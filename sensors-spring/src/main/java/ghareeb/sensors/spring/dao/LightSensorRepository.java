@@ -1,9 +1,9 @@
 package ghareeb.sensors.spring.dao;
 
 import ghareeb.sensors.spring.entity.LightSensor;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import javax.transaction.Transactional;
 
-@RepositoryRestResource
+@Transactional
 public interface LightSensorRepository extends SensorRepository<LightSensor> {
 }

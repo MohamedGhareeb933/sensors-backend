@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS `sensors_tabe_per_class`;
+CREATE SCHEMA IF NOT EXISTS `sensors`;
 
 USE `sensors`;
 
@@ -21,37 +21,35 @@ CREATE TABLE IF NOT EXISTS `location` (
     CONSTRAINT `fk_environment_location` FOREIGN KEY (`environment_id`) REFERENCES `environment`(`id`)
 )engine=InnoDB AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE IF NOT EXISTS `humidity_sensor` (
+CREATE TABLE IF NOT EXISTS `sensor` (
     `id` BIGINT NOT NULL AUTO_INCREMENT, 
+    `min` FLOAT DEFAULT NULL, 
+    `max` FLOAT DEFAULT NULL, 
+    `active` TINYINT(1) DEFAULT NULL,
+    `location_id` BIGINT DEFAULT NULL , 
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_location_sensor` FOREIGN KEY (`location_id`) REFERENCES `location`(`id`)
+)engine=InnoDB AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE IF NOT EXISTS `humidity_sensor` (
+    `id` BIGINT NOT NULL, 
     `absolute` FLOAT DEFAULT NULL, 
     `relative` FLOAT DEFAULT NULL, 
-    `min` FLOAT DEFAULT NULL, 
-    `max` FLOAT DEFAULT NULL, 
-    `active` TINYINT(1) DEFAULT NULL,
-    `location_id` BIGINT DEFAULT NULL , 
     PRIMARY KEY(`id`),
-    CONSTRAINT `fk_location_humidity` FOREIGN KEY (`location_id`) REFERENCES `location`(`id`)
-)engine=InnoDB AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    CONSTRAINT `fk_sensor_humidity` FOREIGN KEY (`id`) REFERENCES `sensor`(`id`)
+)engine=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `light_sensor` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT, 
+    `id` BIGINT NOT NULL,  
     `radiometry` FLOAT DEFAULT NULL, 
     `luminous` FLOAT DEFAULT NULL, 
-    `min` FLOAT DEFAULT NULL, 
-    `max` FLOAT DEFAULT NULL, 
-    `active` TINYINT(1) DEFAULT NULL,
-    `location_id` BIGINT DEFAULT NULL , 
     PRIMARY KEY(`id`),
-    CONSTRAINT `fk_location_light` FOREIGN KEY (`location_id`) REFERENCES `location`(`id`)
-)engine=InnoDB AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    CONSTRAINT `fk_sensor_light` FOREIGN KEY (`id`) REFERENCES `sensor`(`id`)
+)engine=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE IF NOT EXISTS `temp_sensor` (
-    `id` BIGINT NOT NULL AUTO_INCREMENT, 
+    `id` BIGINT NOT NULL, 
     `temp` FLOAT DEFAULT NULL, 
-    `min` FLOAT DEFAULT NULL, 
-    `max` FLOAT DEFAULT NULL, 
-    `active` TINYINT(1) DEFAULT NULL,
-    `location_id` BIGINT DEFAULT NULL , 
     PRIMARY KEY(`id`),
-    CONSTRAINT `fk_location_temp` FOREIGN KEY (`location_id`) REFERENCES `location`(`id`)
-)engine=InnoDB AUTO_INCREMENT=1 CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+    CONSTRAINT `fk_sensor_temp` FOREIGN KEY (`id`) REFERENCES `sensor`(`id`)
+)engine=InnoDB CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

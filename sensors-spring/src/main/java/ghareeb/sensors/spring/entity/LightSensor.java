@@ -2,8 +2,7 @@ package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "light_sensor")
+@Entity(name = "light_sensor")
 public class LightSensor extends Sensor {
 
     @Column(name = "radiometry")
@@ -12,4 +11,27 @@ public class LightSensor extends Sensor {
     @Column(name = "luminous")
     private float luminous;
 
+    public LightSensor() {}
+
+    public LightSensor(float min, float max, boolean active, Location location, float radiometry, float luminous) {
+        super(min, max, active, location);
+        this.radiometry = radiometry;
+        this.luminous = luminous;
+    }
+
+    public float getRadiometry() {
+        return radiometry;
+    }
+
+    public void setRadiometry(float radiometry) {
+        this.radiometry = radiometry;
+    }
+
+    public float getLuminous() {
+        return luminous;
+    }
+
+    public void setLuminous(float luminous) {
+        this.luminous = luminous;
+    }
 }

@@ -4,8 +4,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "location")
+@Entity(name = "location")
 public class Location {
 
     @Id
@@ -31,7 +30,7 @@ public class Location {
     private Environment environment;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
-    private Set<Sensor> Sensors = new HashSet<>();
+    private Set<Sensor> sensors = new HashSet<>();
 
 
     public Location() {
@@ -43,7 +42,7 @@ public class Location {
         this.abnormalLight = abnormalLight;
         this.abnormalHumidity = abnormalHumidity;
         this.environment = environment;
-        this.Sensors = sensors;
+        this.sensors = sensors;
     }
 
     public String getName() {
@@ -91,14 +90,24 @@ public class Location {
     }
 
     public Set<Sensor> getSensors() {
-        return Sensors;
+        return sensors;
     }
 
     public void setSensors(Set<Sensor> sensors) {
-        Sensors = sensors;
+        sensors = sensors;
     }
 
     public void setEnvironment(Environment environment) {
         this.environment = environment;
+    }
+
+    public void add(Sensor sensor) {
+        if (sensor != null) {
+            if (sensors == null) {
+                sensors = new HashSet<>();
+            }
+            sensors.add(sensor);
+            sensor.setLocation(this);
+        }
     }
 }
