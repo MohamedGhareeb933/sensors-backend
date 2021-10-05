@@ -3,7 +3,7 @@
 the project is not yet ended and does not have code documentation yet 
 
 # TABLES
- Sensor has all the main columns like min, max and active 
+Sensor has all the main columns like min, max and active 
 
 and temp sensor that has its specific attribute like temperature 
 
