@@ -4,6 +4,10 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * environment entity - which mean whole place like house which has multiple rooms
+ * has one-to-many with location that mean environment could have many locations.
+ */
 @Entity(name = "environment")
 public class Environment {
 

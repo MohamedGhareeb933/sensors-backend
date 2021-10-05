@@ -2,6 +2,13 @@ package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
 
+/**
+ * parent class to humidity - light - temprature sensor
+ * Inheritance type Joined which mean - the column which repeatedly appears in all column in all the tables
+ * will be used for joining with sub class columns
+ *
+ * sensor has many-to-one relation with location
+ */
 @Entity(name = "sensor")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Sensor {

@@ -1,5 +1,9 @@
 package ghareeb.sensors.spring.dto;
 
+
+/**
+ *  the response message we will get after sending http method.
+ */
 public class ResponseMessage {
 
     private String message;

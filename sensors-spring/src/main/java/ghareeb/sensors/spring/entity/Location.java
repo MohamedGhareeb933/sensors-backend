@@ -4,6 +4,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * location entity has the boolean state of each case sensors detects
+ * has many-to-one relation with environment - environment could have many locations
+ * has one-to-many relation with sensors - location could have many types of sensors
+ */
 @Entity(name = "location")
 public class Location {
 
@@ -15,8 +20,8 @@ public class Location {
     @Column(name = "name")
     private String name;
 
-   @Column(name = "ab_temp")
-   private boolean abnormalTemperature;
+    @Column(name = "ab_temp")
+    private boolean abnormalTemperature;
 
     @Column(name = "ab_light")
     private boolean abnormalLight;

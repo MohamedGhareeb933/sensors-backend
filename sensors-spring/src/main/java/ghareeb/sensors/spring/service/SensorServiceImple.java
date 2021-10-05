@@ -9,6 +9,10 @@ import ghareeb.sensors.spring.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * service layer that has all Dao Repositories and save objects
+ *
+ */
 @Service
 public class SensorServiceImple implements SensorService{
 
@@ -21,34 +25,177 @@ public class SensorServiceImple implements SensorService{
     @Autowired
     private SensorRepository sensorRepository;
 
+    // TODO PUT AND DELETE METHODS
 
+    /**
+     * check for every payload existence then save them
+     * also the method call handle payload cases
+     *
+      * @param payload
+     * @return ResponseMessage("Message")
+     */
     @Override
     public ResponseMessage postPayload(Payload payload) {
 
-        // TODO CHECK FOR PAYLOADS
-        // TODO PUT AND DELETE METHODS
         // TODO HANDLE CASES
 
-        Environment environment = payload.getEnvironment();
-        Location location = payload.getLocation();
+        if (payload.getEnvironment() != null) {
+            Environment environment = handleEnvironmentPayload(payload);
+            environmentRepository.save(environment);
+        } else if (payload.getLocation() != null) {
+            Location location = handleLocationPayload(payload);
+            handleLocationEnvironment(location);
+            locationRepository.save(location);
+        } else {
 
-        environment.add(location);
+            if (payload.getHumiditySensor() != null) {
+                Sensor humidity = humiditySensorPayload(payload);
+                handleSensorLocation(humidity);
+                sensorRepository.save(humidity);
+            }
+            if (payload.getLightSensor() != null) {
+                Sensor light = lightSensorPayload(payload);
+                handleSensorLocation(light);
+                sensorRepository.save(light);
+            }
+            if (payload.getTempSensor() != null) {
+                Sensor temp = tempSensorPayload(payload);
+                handleSensorLocation(temp);
+                sensorRepository.save(temp);
+            }
 
-        Sensor humidity = payload.getHumiditySensor();
-
-        Sensor light = payload.getLightSensor();
-
-        Sensor temp = payload.getTempSensor();
-
-        location.add(humidity);
-        location.add(light);
-        location.add(temp);
-
-
-        environmentRepository.save(environment);
+        }
 
         return new ResponseMessage("success");
     }
 
+    /**
+     * if the sensor posted individually it will require location id
+     * to add sensors to location .
+     * otherwise, throw an error
+     *
+     *
+     * @param sensor
+     * @return Sensor
+     */
+    private Sensor handleSensorLocation(Sensor sensor) {
+        try {
+            if (sensor.getLocation().getId() == 0) {
+                throw new Exception("Sensor must Attached to Location");
+            }
+            Location location = findLocation(sensor);
+            sensor.setLocation(location);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return sensor;
+
+    }
+
+    /**
+     * if the location posted Alone - it will require environment id
+     * to add location to the environment
+     * otherwise throw an error
+     *
+     * @param location
+     * @return Location
+     */
+    private Location handleLocationEnvironment(Location location) {
+        try {
+            if (location.getEnvironment().getId() == 0) {
+                throw new Exception("location must be found in environment ");
+            }
+            Environment environment = findEnvironment(location);
+            location.setEnvironment(environment);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return location;
+    }
+
+    /**
+     * deserialize Json and set Environment
+     * in case we have location in the payload/Json we add the location to the environment
+     *
+     * @param payload
+     * @return Environment
+     */
+    private Environment handleEnvironmentPayload(Payload payload) {
+
+        Environment environment = payload.getEnvironment();
+
+            if (payload.getLocation() != null) {
+                Location location = handleLocationPayload(payload);
+                environment.add(location);
+            }
+
+        return environment;
+    }
+
+    /**
+     * set the location from payload/Json/deserialize
+     * and check in case we have sensors - we add sensors to the location
+     *
+     * @param payload
+     * @return Location
+     */
+    private Location handleLocationPayload(Payload payload){
+
+        Location location = payload.getLocation();
+
+        if (payload.getHumiditySensor() != null) {
+            Sensor humidity = humiditySensorPayload(payload);
+            location.add(humidity);
+        }
+        if (payload.getLightSensor() != null) {
+            Sensor light = lightSensorPayload(payload);
+            location.add(light);
+        }
+        if (payload.getTempSensor() != null) {
+            Sensor temp = tempSensorPayload(payload);
+            location.add(temp);
+        }
+
+        return location;
+    }
+
+    /**
+     * each sensor has a type in the data transfer object/dto
+     * get each sensor type and return it
+     *
+     * @param payload
+     * @return
+     */
+    private Sensor humiditySensorPayload(Payload payload) {
+        return payload.getHumiditySensor();
+    }
+
+    private Sensor lightSensorPayload(Payload payload) {
+        return payload.getLightSensor();
+    }
+
+    private Sensor tempSensorPayload(Payload payload) {
+        return payload.getTempSensor();
+    }
+
+    /**
+     *  find entity by id
+     *  in the findby parameter we pass the id of the class we want to find
+     *
+     * @param location
+     * @return
+     * @throws Exception
+     */
+    private Environment findEnvironment(Location location) throws Exception {
+        return environmentRepository.findById(location.getEnvironment().getId()).orElseThrow();
+    }
+
+    private Location findLocation(Sensor humidity) throws Exception {
+        return locationRepository.findById(humidity.getLocation().getId()).orElseThrow();
+    }
 
 }

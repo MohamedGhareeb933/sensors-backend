@@ -2,10 +2,13 @@ package ghareeb.sensors.spring.dto;
 
 import ghareeb.sensors.spring.entity.*;
 
-import java.util.HashSet;
-import java.util.Set;
 
-
+/**
+ * data transfer object
+ * responsible for getting data from json
+ * has environment, location and each type of sensor
+ *
+ */
 public class Payload {
 
     private Environment environment;
