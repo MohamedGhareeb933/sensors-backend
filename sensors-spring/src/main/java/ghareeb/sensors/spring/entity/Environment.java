@@ -17,7 +17,7 @@ public class Environment {
     private long id;
 
     @Column(name = "alarm")
-    private boolean alarm;
+    private Boolean alarm;
 
     @Column(name = "email")
     private String email;
@@ -56,11 +56,11 @@ public class Environment {
         this.name = name;
     }
 
-    public boolean isAlarm() {
+    public Boolean isAlarm() {
         return alarm;
     }
 
-    public void setAlarm(boolean alarm) {
+    public void setAlarm(Boolean alarm) {
         this.alarm = alarm;
     }
 

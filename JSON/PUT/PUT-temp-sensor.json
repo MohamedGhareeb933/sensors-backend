@@ -1,0 +1,12 @@
+{
+    "_URL": "http://localhost:8080/temp/id",
+    "tempSensor": {
+        "min": 10,
+        "max": 20,
+        "active": true,
+        "temp": 43,
+        "location": {
+            "id": 8
+        }
+    }
+}

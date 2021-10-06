@@ -10,10 +10,10 @@ import javax.persistence.*;
 public class LightSensor extends Sensor {
 
     @Column(name = "radiometry")
-    private float radiometry;
+    private Float radiometry;
 
     @Column(name = "luminous")
-    private float luminous;
+    private Float luminous;
 
     public LightSensor() {}
 
@@ -23,19 +23,19 @@ public class LightSensor extends Sensor {
         this.luminous = luminous;
     }
 
-    public float getRadiometry() {
+    public Float getRadiometry() {
         return radiometry;
     }
 
-    public void setRadiometry(float radiometry) {
+    public void setRadiometry(Float radiometry) {
         this.radiometry = radiometry;
     }
 
-    public float getLuminous() {
+    public Float getLuminous() {
         return luminous;
     }
 
-    public void setLuminous(float luminous) {
+    public void setLuminous(Float luminous) {
         this.luminous = luminous;
     }
 }

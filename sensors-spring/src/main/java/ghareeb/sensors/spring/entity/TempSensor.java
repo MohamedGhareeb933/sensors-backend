@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class TempSensor extends Sensor {
 
     @Column(name = "temp")
-    private float temp;
+    private Float temp;
 
     public TempSensor() { }
 
@@ -20,11 +20,11 @@ public class TempSensor extends Sensor {
         this.temp = temp;
     }
 
-    public float getTemp() {
+    public Float getTemp() {
         return temp;
     }
 
-    public void setTemp(float temp) {
+    public void setTemp(Float temp) {
         this.temp = temp;
     }
 }

@@ -1,0 +1,15 @@
+
+
+{
+    "_URL": "http://localhost:8080/humidity/id",
+    "humiditySensor": {
+        "min": 200,
+        "max": 1500,
+        "active": true,
+        "absolute": 980,
+        "relative": 908,
+        "location": {
+            "id": 8
+        }
+    }
+}

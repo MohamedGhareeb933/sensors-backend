@@ -1,0 +1,14 @@
+
+
+{
+    "_URL": "http://localhost:8080/location/id",
+    "location": {
+        "name": "salon",
+        "abnormalTemperature": false,
+        "abnormalLight": false,
+        "abnormalHumidity": false,
+        "environment": {
+            "id": 4
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "_URL": "http://localhost:8080/light/id",
+    "lightSensor": {
+        "min": 10,
+        "max": 20,
+        "active": true,
+        "radiometry": 80,
+        "luminous": 20,
+        "location": {
+            "id": 8
+        }
+    }
+}

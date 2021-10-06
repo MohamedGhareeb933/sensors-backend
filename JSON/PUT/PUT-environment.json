@@ -1,0 +1,10 @@
+
+
+{
+"_URL": "http://localhost:8080/environment/id",
+    "environment": {
+        "alarm": true,
+        "email": "ghareeb@gmail.com",
+        "name": "shooting club"
+    }
+}

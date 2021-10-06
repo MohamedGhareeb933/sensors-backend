@@ -19,13 +19,13 @@ public abstract class Sensor {
     private long id;
 
     @Column(name = "min")
-    private float min;
+    private Float min;
 
     @Column(name = "max")
-    private float max;
+    private Float max;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
                 CascadeType.PERSIST, CascadeType.REFRESH})
@@ -50,27 +50,27 @@ public abstract class Sensor {
         this.id = id;
     }
 
-    public float getMin() {
+    public Float getMin() {
         return min;
     }
 
-    public void setMin(float min) {
+    public void setMin(Float min) {
         this.min = min;
     }
 
-    public float getMax() {
+    public Float getMax() {
         return max;
     }
 
-    public void setMax(float max) {
+    public void setMax(Float max) {
         this.max = max;
     }
 
-    public boolean isActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Boolean active) {
         this.active = active;
     }
 

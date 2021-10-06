@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
  * service layer that has all Dao Repositories and save objects
  *
  */
-@Service
-public class SensorServiceImple implements SensorService{
+@Service("sensorPostService")
+public class PostServiceImple implements PostService {
 
     @Autowired
     private EnvironmentRepository environmentRepository;
@@ -31,7 +31,7 @@ public class SensorServiceImple implements SensorService{
      * check for every payload existence then save them
      * also the method call handle payload cases
      *
-      * @param payload
+     * @param payload
      * @return ResponseMessage("Message")
      */
     @Override
@@ -73,7 +73,6 @@ public class SensorServiceImple implements SensorService{
      * if the sensor posted individually it will require location id
      * to add sensors to location .
      * otherwise, throw an error
-     *
      *
      * @param sensor
      * @return Sensor

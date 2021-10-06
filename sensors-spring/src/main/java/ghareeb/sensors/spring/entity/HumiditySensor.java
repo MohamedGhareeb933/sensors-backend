@@ -11,10 +11,10 @@ import javax.persistence.*;
 public class HumiditySensor extends Sensor {
 
     @Column(name = "absolute")
-    private float absolute;
+    private Float absolute;
 
     @Column(name = "relative")
-    private float relative;
+    private Float relative;
 
     public HumiditySensor() { }
 
@@ -24,19 +24,19 @@ public class HumiditySensor extends Sensor {
         this.relative = relative;
     }
 
-    public float getAbsolute() {
+    public Float getAbsolute() {
         return absolute;
     }
 
-    public void setAbsolute(float absolute) {
+    public void setAbsolute(Float absolute) {
         this.absolute = absolute;
     }
 
-    public float getRelative() {
+    public Float getRelative() {
         return relative;
     }
 
-    public void setRelative(float relative) {
+    public void setRelative(Float relative) {
         this.relative = relative;
     }
 }

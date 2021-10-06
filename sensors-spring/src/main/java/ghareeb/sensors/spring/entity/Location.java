@@ -21,13 +21,13 @@ public class Location {
     private String name;
 
     @Column(name = "ab_temp")
-    private boolean abnormalTemperature;
+    private Boolean abnormalTemperature;
 
     @Column(name = "ab_light")
-    private boolean abnormalLight;
+    private Boolean abnormalLight;
 
     @Column(name = "ab_humidity")
-    private boolean abnormalHumidity;
+    private Boolean abnormalHumidity;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
@@ -58,27 +58,27 @@ public class Location {
         this.name = name;
     }
 
-    public boolean isAbnormalTemperature() {
+    public Boolean isAbnormalTemperature() {
         return abnormalTemperature;
     }
 
-    public void setAbnormalTemperature(boolean abnormalTemperature) {
+    public void setAbnormalTemperature(Boolean abnormalTemperature) {
         this.abnormalTemperature = abnormalTemperature;
     }
 
-    public boolean isAbnormalLight() {
+    public Boolean isAbnormalLight() {
         return abnormalLight;
     }
 
-    public void setAbnormalLight(boolean abnormalLight) {
+    public void setAbnormalLight(Boolean abnormalLight) {
         this.abnormalLight = abnormalLight;
     }
 
-    public boolean isAbnormalHumidity() {
+    public Boolean isAbnormalHumidity() {
         return abnormalHumidity;
     }
 
-    public void setAbnormalHumidity(boolean abnormalHumidity) {
+    public void setAbnormalHumidity(Boolean abnormalHumidity) {
         this.abnormalHumidity = abnormalHumidity;
     }
 
