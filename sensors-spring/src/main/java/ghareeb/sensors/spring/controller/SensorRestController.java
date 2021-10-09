@@ -7,11 +7,13 @@ import ghareeb.sensors.spring.service.PutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.xpath.XPathVariableResolver;
-
 
 /**
- *  the rest controller has add/post http method and call postPayload that save to entity and has the logic.
+ *  Rest controller class for add/post or update/put API
+ *
+ *  has post method api for saving the data - logic in the service class
+ *  has put method for each entity and subclass
+ *
  */
 @RestController
 @CrossOrigin
@@ -53,5 +55,7 @@ public class SensorRestController {
     public ResponseMessage updateTemp(@RequestBody Payload payload, @PathVariable long id) {
         return putService.updateTempSensor(payload, id);
     }
+    
+
 
 }

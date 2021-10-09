@@ -3,7 +3,7 @@ package ghareeb.sensors.spring.entity;
 import javax.persistence.*;
 
 /**
- * sub class of sensor
+ * subclass of sensor
  * has its own columns which is absolute and relative to be joined with the parent class column
  *
  */

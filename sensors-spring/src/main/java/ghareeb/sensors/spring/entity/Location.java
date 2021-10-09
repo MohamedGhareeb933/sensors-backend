@@ -34,7 +34,7 @@ public class Location {
     @JoinColumn(name = "environment_id")
     private Environment environment;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "location")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "location")
     private Set<Sensor> sensors = new HashSet<>();
 
 

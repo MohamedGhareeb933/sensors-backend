@@ -3,7 +3,7 @@ package ghareeb.sensors.spring.entity;
 import javax.persistence.*;
 
 /**
- *  sub class of sensor
+ *  subclass of sensor
  *  has radiometry and luminous to be joined with sensor columns 
  */
 @Entity(name = "light_sensor")

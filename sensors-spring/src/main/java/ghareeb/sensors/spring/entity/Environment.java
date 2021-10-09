@@ -25,8 +25,7 @@ public class Environment {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH,
-                CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Location> locations = new HashSet<>();
 
 

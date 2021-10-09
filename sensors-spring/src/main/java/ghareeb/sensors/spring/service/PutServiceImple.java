@@ -9,7 +9,10 @@ import ghareeb.sensors.spring.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-// TODO DOC
+/**
+ * Put/update Service Class - responsible for data updates
+ *
+ */
 @Service
 public class PutServiceImple implements PutService{
 
@@ -22,19 +25,27 @@ public class PutServiceImple implements PutService{
     @Autowired
     private SensorRepository sensorRepository;
 
-    // TODO DOC
+    /**
+     * Environment update
+     * initialise environment from payload - find the environment from persistence
+     * and check whether the payload/json object has a property and update it
+     *
+     * @param payload
+     * @param id
+     * @return
+     */
     @Override
     public ResponseMessage updateEnvironment(Payload payload, long id) {
 
-        Environment jsonEnv = payload.getEnvironment();
+        Environment payloadEnvironment = payload.getEnvironment();
 
         environmentRepository.findById(id).map(
                 environment -> {
-                    if (jsonEnv.getEmail() != null) environment.setEmail(jsonEnv.getEmail());
+                    if (payloadEnvironment.getEmail() != null) environment.setEmail(payloadEnvironment.getEmail());
 
-                    if (jsonEnv.getName() != null) environment.setName(jsonEnv.getName());
+                    if (payloadEnvironment.getName() != null) environment.setName(payloadEnvironment.getName());
 
-                    if (jsonEnv.isAlarm() != null) environment.setAlarm(jsonEnv.isAlarm());
+                    if (payloadEnvironment.isAlarm() != null) environment.setAlarm(payloadEnvironment.isAlarm());
 
                     return environmentRepository.save(environment);
                 });
@@ -42,31 +53,40 @@ public class PutServiceImple implements PutService{
         return new ResponseMessage("success");
     }
 
-    // TODO DOC
+    /**
+     * location update
+     * deserialize location payload - find location from database
+     * check for every property - in case it has payload / update
+     * otherwise keep the data.
+     *
+     * @param payload
+     * @param id
+     * @return
+     */
     @Override
     public ResponseMessage updateLocation(Payload payload, long id) {
 
-        Location jsonLocation = payload.getLocation();
+        Location payloadLocation = payload.getLocation();
 
             locationRepository.findById(id).map(
                     location -> {
 
                         try {
 
-                            if (jsonLocation.getName() != null)
-                                location.setName(jsonLocation.getName());
+                            if (payloadLocation.getName() != null)
+                                location.setName(payloadLocation.getName());
 
-                            if (jsonLocation.isAbnormalHumidity() != null)
-                                location.setAbnormalHumidity(jsonLocation.isAbnormalHumidity());
+                            if (payloadLocation.isAbnormalHumidity() != null)
+                                location.setAbnormalHumidity(payloadLocation.isAbnormalHumidity());
 
-                            if (jsonLocation.isAbnormalLight() != null)
-                                location.setAbnormalLight(jsonLocation.isAbnormalLight());
+                            if (payloadLocation.isAbnormalLight() != null)
+                                location.setAbnormalLight(payloadLocation.isAbnormalLight());
 
-                            if (jsonLocation.isAbnormalTemperature() != null)
-                                location.setAbnormalTemperature(jsonLocation.isAbnormalTemperature());
+                            if (payloadLocation.isAbnormalTemperature() != null)
+                                location.setAbnormalTemperature(payloadLocation.isAbnormalTemperature());
 
-                            if (jsonLocation.getEnvironment().getId() != 0)
-                                location.setEnvironment(findEnvironment(jsonLocation));
+                            if (payloadLocation.getEnvironment().getId() != 0)
+                                location.setEnvironment(findEnvironment(payloadLocation));
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -78,7 +98,19 @@ public class PutServiceImple implements PutService{
         return new ResponseMessage("success");
     }
 
-    // TODO DOC
+    /**
+     * Sensor update
+     * get Sensor Object from data transfer layer and find sensor from the database by id
+     * check in case the sensor is a type of specific sensor, like humidity for example
+     * then cast the child humidity class.
+     *
+     * method has update parent that update general properties like: min,max,active
+     * and finally cast and update specific property for each sensor
+     *
+     * @param payload
+     * @param id
+     * @return
+     */
     @Override
     public ResponseMessage updateHumiditySensor(Payload payload, long id) {
 
@@ -104,7 +136,6 @@ public class PutServiceImple implements PutService{
         return new ResponseMessage("success");
     }
 
-    // TODO DOC
     @Override
     public ResponseMessage updateLightSensor(Payload payload, long id) {
         Sensor light = payload.getLightSensor();
@@ -129,7 +160,6 @@ public class PutServiceImple implements PutService{
         return new ResponseMessage("success");
     }
 
-    // TODO DOC
     @Override
     public ResponseMessage updateTempSensor(Payload payload, long id) {
         Sensor temp = payload.getTempSensor();
@@ -151,10 +181,10 @@ public class PutServiceImple implements PutService{
         return new ResponseMessage("success");
     }
 
-    // TODO DOC
     private void updateParentSensor(Sensor fromPayload, Sensor fromPersist){
 
         try {
+
             if (fromPayload.getMin() != null)
                 fromPersist.setMin(fromPayload.getMin());
 
@@ -173,7 +203,13 @@ public class PutServiceImple implements PutService{
 
     }
 
-    // TODO DOC
+    /**
+     * find environment that exist in location payload
+     *
+     * @param location
+     * @return
+     * @throws Exception
+     */
     private Environment findEnvironment(Location location) throws Exception {
         return environmentRepository.findById(location.getEnvironment().getId()).orElseThrow();
     }

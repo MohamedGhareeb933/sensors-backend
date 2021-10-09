@@ -1,0 +1,5 @@
+{
+    "_DELETE-ENVIRONMENT-URL" : "localhost:8080/environments/4",
+    "_DELETE-LOCATION-URL" : "localhost:8080/locations/1",
+    "_DELETE-SENSOR-URL" : "localhost:8080/sensors/1"
+}
