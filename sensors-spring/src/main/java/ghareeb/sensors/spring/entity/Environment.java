@@ -1,6 +1,8 @@
 package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +12,7 @@ import java.util.Set;
  */
 @Entity(name = "environment")
 public class Environment {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,9 +22,11 @@ public class Environment {
     private Boolean alarm;
 
     @Column(name = "email")
+    @Pattern(regexp = "^[A-Za-z0-9а-яА-Я\\._-]+@([A-Za-z0-9а-яА-Я]{1,2}|[A-Za-z0-9а-яА-Я]((?!(\\.\\.))[A-Za-z0-9а-яА-Я.-])+[A-Za-z0-9а-яА-Я])\\.[A-Za-zа-яА-Я]{2,}$" )
     private String email;
 
     @Column(name = "name")
+    @Size(min = 2, max = 50)
     private String name;
 
     @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

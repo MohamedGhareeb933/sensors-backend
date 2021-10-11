@@ -1,6 +1,7 @@
 package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,7 @@ public class Location {
     private long id;
 
     @Column(name = "name")
+    @Size(min = 2, max = 50)
     private String name;
 
     @Column(name = "ab_temp")
