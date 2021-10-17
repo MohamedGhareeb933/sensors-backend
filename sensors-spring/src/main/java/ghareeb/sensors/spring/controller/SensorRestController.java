@@ -1,11 +1,18 @@
 package ghareeb.sensors.spring.controller;
 
+import ghareeb.sensors.spring.dao.EnvironmentRepository;
+import ghareeb.sensors.spring.dao.LocationRepository;
 import ghareeb.sensors.spring.dto.Payload;
 import ghareeb.sensors.spring.dto.ResponseMessage;
+import ghareeb.sensors.spring.entity.Environment;
+import ghareeb.sensors.spring.entity.Location;
 import ghareeb.sensors.spring.service.PostService;
 import ghareeb.sensors.spring.service.PutService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -24,6 +31,13 @@ public class SensorRestController {
 
     @Autowired
     private PutService putService;
+
+    @Autowired
+    private EnvironmentRepository environmentRepository;
+
+    @Autowired
+    private LocationRepository locationRepository;
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseMessage postPayload(@RequestBody Payload payload) {
@@ -55,7 +69,10 @@ public class SensorRestController {
     public ResponseMessage updateTemp(@RequestBody Payload payload, @PathVariable long id) {
         return putService.updateTempSensor(payload, id);
     }
-    
 
+    @RequestMapping(value = "/getAllLocations", method = RequestMethod.GET)
+    public List<Environment> getAllLocations() {
+        return environmentRepository.findAll();
+    }
 
 }

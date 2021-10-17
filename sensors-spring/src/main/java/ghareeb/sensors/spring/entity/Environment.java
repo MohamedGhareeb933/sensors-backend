@@ -12,7 +12,7 @@ import java.util.Set;
  */
 @Entity(name = "environment")
 public class Environment {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
