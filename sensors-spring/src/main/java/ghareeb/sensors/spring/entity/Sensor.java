@@ -1,6 +1,9 @@
 package ghareeb.sensors.spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * parent class to humidity - light - temperature sensor
@@ -19,14 +22,18 @@ public abstract class Sensor {
     private long id;
 
     @Column(name = "min")
+    @NotNull
     private Float min;
 
     @Column(name = "max")
+    @NotNull
     private Float max;
 
     @Column(name = "active")
+    @NotNull
     private Boolean active;
 
+    @JsonBackReference
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
                 CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "location_id")

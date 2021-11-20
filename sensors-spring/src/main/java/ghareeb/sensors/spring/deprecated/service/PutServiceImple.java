@@ -1,19 +1,18 @@
-package ghareeb.sensors.spring.service;
+package ghareeb.sensors.spring.deprecated.service;
 
 import ghareeb.sensors.spring.dao.EnvironmentRepository;
 import ghareeb.sensors.spring.dao.LocationRepository;
 import ghareeb.sensors.spring.dao.SensorRepository;
-import ghareeb.sensors.spring.dto.Payload;
-import ghareeb.sensors.spring.dto.ResponseMessage;
+import ghareeb.sensors.spring.deprecated.dto.Payload;
+import ghareeb.sensors.spring.deprecated.dto.ResponseMessage;
 import ghareeb.sensors.spring.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * Put/update Service Class - responsible for data updates
  *
  */
-@Service
+//@Service
 public class PutServiceImple implements PutService{
 
     @Autowired
@@ -173,7 +172,6 @@ public class PutServiceImple implements PutService{
 
                         if (((TempSensor) temp).getTemp() != null)
                             tempSensor.setTemp(((TempSensor) temp).getTemp());
-
                     }
                     return sensorRepository.save(sensor);
                 });

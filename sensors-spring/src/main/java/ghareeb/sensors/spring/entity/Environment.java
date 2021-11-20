@@ -1,6 +1,10 @@
 package ghareeb.sensors.spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
@@ -19,17 +23,21 @@ public class Environment {
     private long id;
 
     @Column(name = "alarm")
+    @NotNull
     private Boolean alarm;
 
     @Column(name = "email")
-    @Pattern(regexp = "^[A-Za-z0-9а-яА-Я\\._-]+@([A-Za-z0-9а-яА-Я]{1,2}|[A-Za-z0-9а-яА-Я]((?!(\\.\\.))[A-Za-z0-9а-яА-Я.-])+[A-Za-z0-9а-яА-Я])\\.[A-Za-zа-яА-Я]{2,}$" )
+    @Email
+    @NotNull
     private String email;
 
     @Column(name = "name")
     @Size(min = 2, max = 50)
+    @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "environment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "environment")
     private Set<Location> locations = new HashSet<>();
 
 
@@ -92,4 +100,7 @@ public class Environment {
             location.setEnvironment(this);
         }
     }
+
+
+
 }

@@ -1,0 +1,14 @@
+{
+    "_POST-URL": "localhost:8080/environments",
+    "alarm": false,
+    "email": "mo@gmail.com",
+    "name": "shooting club",
+    "locations": [
+        {
+            "name": "salon",
+            "abnormalTemperature": false,
+            "abnormalLight": false,
+            "abnormalHumidity": false
+        }
+    ]
+}

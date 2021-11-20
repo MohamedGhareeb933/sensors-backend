@@ -1,7 +1,7 @@
-package ghareeb.sensors.spring.service;
+package ghareeb.sensors.spring.deprecated.service;
 
-import ghareeb.sensors.spring.dto.Payload;
-import ghareeb.sensors.spring.dto.ResponseMessage;
+import ghareeb.sensors.spring.deprecated.dto.Payload;
+import ghareeb.sensors.spring.deprecated.dto.ResponseMessage;
 
 public interface PutService {
 

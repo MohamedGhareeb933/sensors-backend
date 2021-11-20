@@ -1,4 +1,4 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.deprecated.dto;
 
 
 /**

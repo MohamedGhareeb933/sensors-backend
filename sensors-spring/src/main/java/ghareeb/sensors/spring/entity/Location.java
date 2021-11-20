@@ -1,6 +1,10 @@
 package ghareeb.sensors.spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +14,7 @@ import java.util.Set;
  * has many-to-one relation with environment - environment could have many locations
  * has one-to-many relation with sensors - location could have many types of sensors
  */
+
 @Entity(name = "location")
 public class Location {
 
@@ -20,6 +25,7 @@ public class Location {
 
     @Column(name = "name")
     @Size(min = 2, max = 50)
+    @NotNull
     private String name;
 
     @Column(name = "ab_temp")
@@ -31,11 +37,13 @@ public class Location {
     @Column(name = "ab_humidity")
     private Boolean abnormalHumidity;
 
+    @JsonBackReference
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "environment_id")
     private Environment environment;
 
+    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "location")
     private Set<Sensor> sensors = new HashSet<>();
 
@@ -117,4 +125,5 @@ public class Location {
             sensor.setLocation(this);
         }
     }
+
 }

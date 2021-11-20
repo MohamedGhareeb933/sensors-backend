@@ -1,4 +1,4 @@
-package ghareeb.sensors.spring;
+package ghareeb.sensors.spring.deprecated;
 
 import ghareeb.sensors.spring.entity.Environment;
 import org.junit.jupiter.api.BeforeEach;

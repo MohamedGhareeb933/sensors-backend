@@ -1,4 +1,4 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.deprecated.dto;
 
 import ghareeb.sensors.spring.entity.*;
 
@@ -15,11 +15,11 @@ public class Payload {
 
     private Location location;
 
-   private HumiditySensor humiditySensor;
+    private HumiditySensor humiditySensor;
 
-   private LightSensor lightSensor;
+    private LightSensor lightSensor;
 
-   private TempSensor tempSensor;
+    private TempSensor tempSensor;
 
     public Payload() {
     }

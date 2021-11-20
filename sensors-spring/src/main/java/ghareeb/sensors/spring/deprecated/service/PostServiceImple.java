@@ -1,19 +1,18 @@
-package ghareeb.sensors.spring.service;
+package ghareeb.sensors.spring.deprecated.service;
 
 import ghareeb.sensors.spring.dao.EnvironmentRepository;
 import ghareeb.sensors.spring.dao.LocationRepository;
 import ghareeb.sensors.spring.dao.SensorRepository;
-import ghareeb.sensors.spring.dto.Payload;
-import ghareeb.sensors.spring.dto.ResponseMessage;
+import ghareeb.sensors.spring.deprecated.dto.Payload;
+import ghareeb.sensors.spring.deprecated.dto.ResponseMessage;
 import ghareeb.sensors.spring.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  * service layer that has all Dao Repositories and save objects
  *
  */
-@Service("sensorPostService")
+//@Service("sensorPostService")
 public class PostServiceImple implements PostService {
 
     @Autowired
@@ -36,8 +35,6 @@ public class PostServiceImple implements PostService {
      */
     @Override
     public ResponseMessage postPayload(Payload payload) {
-
-        // TODO HANDLE CASES
 
         if (payload.getEnvironment() != null) {
             Environment environment = handleEnvironmentPayload(payload);
@@ -68,6 +65,7 @@ public class PostServiceImple implements PostService {
 
         return new ResponseMessage("success");
     }
+
 
     /**
      * if the sensor posted individually it will require location id
