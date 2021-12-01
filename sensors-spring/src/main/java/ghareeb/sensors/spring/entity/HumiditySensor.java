@@ -1,6 +1,7 @@
 package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * subclass of sensor
@@ -11,9 +12,11 @@ import javax.persistence.*;
 public class HumiditySensor extends Sensor {
 
     @Column(name = "absolute")
+    @NotNull
     private Float absolute;
 
     @Column(name = "relative")
+    @NotNull
     private Float relative;
 
     public HumiditySensor() { }

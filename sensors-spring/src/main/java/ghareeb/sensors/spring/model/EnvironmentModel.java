@@ -1,4 +1,4 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

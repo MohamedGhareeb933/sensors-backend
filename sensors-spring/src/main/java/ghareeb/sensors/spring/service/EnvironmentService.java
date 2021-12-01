@@ -2,7 +2,7 @@ package ghareeb.sensors.spring.service;
 
 import ghareeb.sensors.spring.assembler.EnvironmentModelAssembler;
 import ghareeb.sensors.spring.dao.EnvironmentRepository;
-import ghareeb.sensors.spring.dto.EnvironmentModel;
+import ghareeb.sensors.spring.model.EnvironmentModel;
 import ghareeb.sensors.spring.entity.Environment;
 import ghareeb.sensors.spring.excpetion.SensorEntitiesNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

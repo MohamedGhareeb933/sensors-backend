@@ -1,5 +1,5 @@
 {
-    "_URL": "http://localhost:8080/add",
+    "_URL": "http://localhost:8080/sensors",
     "humiditySensor": {
         "min": 10,
         "max": 20,
@@ -7,7 +7,7 @@
         "absolute": 43,
         "relative": 25,
         "location": {
-            "id":9
+            "id":1
         }
     },
     "lightSensor": {
@@ -17,7 +17,7 @@
         "radiometry": 43,
         "luminous": 25,
         "location": {
-            "id":9
+            "id":1
         }
     },
     "tempSensor": {
@@ -26,7 +26,7 @@
         "active": true,
         "temp": 43,
         "location": {
-            "id":9
+            "id":1
         }
     }
 }

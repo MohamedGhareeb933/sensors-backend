@@ -1,20 +1,19 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.model;
 
 
-import ghareeb.sensors.spring.entity.Location;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
 public abstract class SensorsModel extends RepresentationModel<SensorsModel> {
 
-    protected long id;
-    protected Float min;
-    protected Float max;
-    protected Boolean active;
-    protected Location location;
+    private long id;
+    private Float min;
+    private Float max;
+    private Boolean active;
+    private LocationModel location;
 
 
-    public SensorsModel(long id, Float min, Float max, Boolean active, Location location) {
+    public SensorsModel(long id, Float min, Float max, Boolean active, LocationModel location) {
         this.id = id;
         this.min = min;
         this.max = max;
@@ -22,7 +21,7 @@ public abstract class SensorsModel extends RepresentationModel<SensorsModel> {
         this.location = location;
     }
 
-    public SensorsModel(Link initialLink, long id, Float min, Float max, Boolean active, Location location) {
+    public SensorsModel(Link initialLink, long id, Float min, Float max, Boolean active, LocationModel location) {
         super(initialLink);
         this.id = id;
         this.min = min;
@@ -31,7 +30,7 @@ public abstract class SensorsModel extends RepresentationModel<SensorsModel> {
         this.location = location;
     }
 
-    public SensorsModel(Iterable<Link> initialLinks, long id, Float min, Float max, Boolean active, Location location) {
+    public SensorsModel(Iterable<Link> initialLinks, long id, Float min, Float max, Boolean active, LocationModel location) {
         super(initialLinks);
         this.id = id;
         this.min = min;
@@ -75,11 +74,11 @@ public abstract class SensorsModel extends RepresentationModel<SensorsModel> {
         this.active = active;
     }
 
-    public Location getLocation() {
+    public LocationModel getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(LocationModel location) {
         this.location = location;
     }
 

@@ -1,6 +1,6 @@
 package ghareeb.sensors.spring.controller;
 
-import ghareeb.sensors.spring.dto.EnvironmentModel;
+import ghareeb.sensors.spring.model.EnvironmentModel;
 import ghareeb.sensors.spring.entity.Environment;
 import ghareeb.sensors.spring.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;

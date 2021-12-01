@@ -1,50 +1,30 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.model;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import ghareeb.sensors.spring.entity.Location;
+import ghareeb.sensors.spring.entity.HumiditySensor;
 import lombok.*;
 import org.springframework.hateoas.server.core.Relation;
 
+@Getter
 @EqualsAndHashCode
-@JsonRootName(value = "humidity sensors")
-@Relation(collectionRelation = "humidity sensors")
+@JsonRootName(value = "humidity")
+@Relation(collectionRelation = "humidity")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class HumiditySensorModel extends SensorsModel{
 
     private Float absolute;
     private Float relative;
 
-    public HumiditySensorModel(long id, Float min, Float max, Boolean active, Location location, Float absolute, Float relative) {
+    @Builder
+    public HumiditySensorModel(long id, Float min, Float max, Boolean active, LocationModel location, Float absolute, Float relative) {
         super(id, min, max, active, location);
-        this.absolute = absolute;
-        this.relative = relative;
-    }
-
-    public HumiditySensorModel(Float absolute, Float relative) {
         this.absolute = absolute;
         this.relative = relative;
     }
 
     public HumiditySensorModel() {
     }
-
-    public Float getAbsolute() {
-        return absolute;
-    }
-
-    public void setAbsolute(Float absolute) {
-        this.absolute = absolute;
-    }
-
-    public Float getRelative() {
-        return relative;
-    }
-
-    public void setRelative(Float relative) {
-        this.relative = relative;
-    }
-
 
 }

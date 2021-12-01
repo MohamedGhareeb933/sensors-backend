@@ -3,7 +3,7 @@ package ghareeb.sensors.spring.service;
 import ghareeb.sensors.spring.assembler.LocationModelAssembler;
 import ghareeb.sensors.spring.dao.EnvironmentRepository;
 import ghareeb.sensors.spring.dao.LocationRepository;
-import ghareeb.sensors.spring.dto.LocationModel;
+import ghareeb.sensors.spring.model.LocationModel;
 import ghareeb.sensors.spring.entity.Environment;
 import ghareeb.sensors.spring.entity.Location;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,14 +44,7 @@ public class LocationService  implements RestService<LocationModel, Location>  {
         
         Environment persistEnvironment = findEnvironment(payload);
 
-        // sensors might not be posted because the transaction is opened
         persistEnvironment.add(payload);
-
-        //TODO, post sensors embedded to location payload
-        
-/*
-        return new ResponseEntity<>(assembler.toModel(locationRepository.save(payload)), HttpStatus.CREATED);
-*/
 
         LocationModel location = assembler.toModel(locationRepository.save(payload));
         return ResponseEntity.created(location.getRequiredLink(IanaLinkRelations.SELF).toUri())

@@ -1,38 +1,58 @@
+
 package ghareeb.sensors.spring.controller;
 
-import ghareeb.sensors.spring.dto.SensorsModel;
+import ghareeb.sensors.spring.deprecated.dto.Payload;
+import ghareeb.sensors.spring.model.SensorsModel;
 import ghareeb.sensors.spring.entity.Sensor;
+import ghareeb.sensors.spring.service.RestService;
 import ghareeb.sensors.spring.service.SensorsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "Sensors")
-public class SensorRestController  implements RestControllerHandler<SensorsModel, Sensor> {
+@RequestMapping(value = "/sensors")
+public class SensorRestController /*TODO implements RestControllerHandler<SensorsModel, Payload>*/ {
 
-    @Override
-    public ResponseEntity<SensorsModel> find(Long id) {
-        return null;
+   /* TODO  @Autowired @Qualifier("sensorService") private RestService<SensorsModel, Payload> sensorsService; */
+
+    @Autowired
+    @Qualifier("sensorService")
+    private SensorsService sensorsService;
+
+    //@Override
+    @GetMapping("/{id}")
+    public ResponseEntity<SensorsModel> find(@PathVariable Long id) {
+        return sensorsService.find(id);
     }
 
-    @Override
+    //@Override
+    @GetMapping
     public ResponseEntity<CollectionModel<SensorsModel>> findAll() {
-        return null;
+        return sensorsService.findAll();
     }
 
-    @Override
-    public ResponseEntity<SensorsModel> save(Sensor payload) {
-        return null;
+    /*@Override
+    @PostMapping
+    public ResponseEntity<SensorsModel> save(@RequestBody Payload payload) {
+        return sensorsService.save(payload);
+    }*/
+
+    //@Override
+    @PostMapping
+    public ResponseEntity<CollectionModel<SensorsModel>> save(@RequestBody Payload payload) {
+        return sensorsService.save(payload);
     }
 
-    @Override
-    public ResponseEntity<SensorsModel> update(Sensor payload, Long id) {
-        return null;
+    //@Override
+    @PutMapping("/{id}")
+    public ResponseEntity<SensorsModel> update(@RequestBody Payload payload,@PathVariable Long id) {
+        return sensorsService.update(payload, id);
     }
+
+
 }

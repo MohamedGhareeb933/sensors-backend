@@ -1,23 +1,23 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.model;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import ghareeb.sensors.spring.entity.Location;
 import lombok.*;
 import org.springframework.hateoas.server.core.Relation;
 
 
+@Getter
 @EqualsAndHashCode
-@JsonRootName(value = "temp sensors")
-@Relation(collectionRelation = "temp sensors")
+@JsonRootName(value = "temp")
+@Relation(collectionRelation = "temp")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TempSensorModel extends SensorsModel{
 
     private Float temp;
 
-
-    public TempSensorModel(long id, Float min, Float max, Boolean active, Location location, Float temp) {
+    @Builder
+    public TempSensorModel(long id, Float min, Float max, Boolean active, LocationModel location, Float temp) {
         super(id, min, max, active, location);
         this.temp = temp;
     }
@@ -25,11 +25,4 @@ public class TempSensorModel extends SensorsModel{
     public TempSensorModel() {
     }
 
-    public Float getTemp() {
-        return temp;
-    }
-
-    public void setTemp(Float temp) {
-        this.temp = temp;
-    }
 }

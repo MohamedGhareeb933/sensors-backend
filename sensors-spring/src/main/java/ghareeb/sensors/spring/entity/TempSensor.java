@@ -1,6 +1,7 @@
 package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * temperature sensor subclass that extends from sensor
@@ -11,6 +12,7 @@ import javax.persistence.*;
 public class TempSensor extends Sensor {
 
     @Column(name = "temp")
+    @NotNull
     private Float temp;
 
     public TempSensor() { }

@@ -1,14 +1,11 @@
-package ghareeb.sensors.spring.dto;
+package ghareeb.sensors.spring.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import ghareeb.sensors.spring.entity.Environment;
-import ghareeb.sensors.spring.entity.Sensor;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data

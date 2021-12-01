@@ -1,25 +1,28 @@
 package ghareeb.sensors.spring.service;
 
 import ghareeb.sensors.spring.assembler.SensorsModelAssembler;
+import ghareeb.sensors.spring.controller.SensorRestController;
 import ghareeb.sensors.spring.dao.LocationRepository;
 import ghareeb.sensors.spring.dao.SensorRepository;
-import ghareeb.sensors.spring.dto.SensorsModel;
-import ghareeb.sensors.spring.entity.HumiditySensor;
-import ghareeb.sensors.spring.entity.LightSensor;
-import ghareeb.sensors.spring.entity.Sensor;
-import ghareeb.sensors.spring.entity.TempSensor;
+import ghareeb.sensors.spring.deprecated.dto.Payload;
+import ghareeb.sensors.spring.entity.*;
+import ghareeb.sensors.spring.excpetion.SensorEntitiesNotFoundException;
+import ghareeb.sensors.spring.model.SensorsModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service("sensorService")
-public class SensorsService /* TODO - implements RestService<SensorsModel, Sensor> */{
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Service("sensorService")
+public class SensorsService /* TODO implements  RestService<SensorsModel, Payload> */ {
 
     @Autowired
     LocationRepository locationRepository;
@@ -30,56 +33,177 @@ public class SensorsService /* TODO - implements RestService<SensorsModel, Senso
     @Autowired
     SensorsModelAssembler assembler;
 
-
-    public Sensor find(Long id) {
-        return (Sensor) sensorRepository.findById(id).get();
-    }
-
-    public List<Sensor> findAll() {
-        return (List<Sensor>) sensorRepository.findAll();
-    }
-
-    /*
-    @Override
+    //@Override
     public ResponseEntity<SensorsModel> find(Long id) {
-        return sensorRepository.findById(id)
-                .map(this::castSensor)
-                .map(assembler::toModel)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() ->
-                        new EntityNotFoundException(String.format("sensor with id %s is not found", id)));
 
+            Optional sensor =  sensorRepository.findById(id);
 
+            if (!sensor.isPresent())
+                throw new SensorEntitiesNotFoundException(String.format("sensor with id %s is not found", id));
 
+            SensorsModel sensorsModel = assembler.toModel((Sensor) sensor.get());
+
+            return new ResponseEntity<>(sensorsModel, HttpStatus.OK);
     }
 
-    @Override
+    //@Override
     public ResponseEntity<CollectionModel<SensorsModel>> findAll() {
-        return null;
+
+         List<Sensor> sensors = sensorRepository.findAll();
+         CollectionModel<SensorsModel> sensorsModels = assembler.toCollectionModel(sensors);
+
+         return new ResponseEntity<>(sensorsModels, HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<SensorsModel> save(Sensor payload) {
-        return null;
+    //@Override
+    public ResponseEntity<CollectionModel<SensorsModel>> save(Payload payload) {
+
+        List<SensorsModel> sensorsModelList = new ArrayList<>();
+
+        Optional<Sensor> sensor = Optional.empty();
+
+        if (payload.getHumiditySensor() != null) {
+            sensor = Optional.of((HumiditySensor) payload.getHumiditySensor());
+
+            Location location = findLocation(sensor.get());
+            location.add(sensor.get());
+
+            HumiditySensor humiditySensor = (HumiditySensor) sensorRepository.save(sensor.get());
+
+            SensorsModel sensorsModel = assembler.toModel(humiditySensor);
+
+            sensorsModelList.add(sensorsModel);
+
+
+        }
+        if (payload.getLightSensor() != null) {
+            sensor = Optional.of((LightSensor) payload.getLightSensor());
+
+            Location location = findLocation(sensor.get());
+            location.add(sensor.get());
+
+            LightSensor lightSensor = (LightSensor) sensorRepository.save(sensor.get());
+
+            SensorsModel sensorsModel = assembler.toModel(lightSensor);
+
+            sensorsModelList.add(sensorsModel);
+
+
+        }
+        if (payload.getTempSensor() != null){
+            sensor = Optional.of((TempSensor) payload.getTempSensor());
+
+            Location location = findLocation(sensor.get());
+            location.add(sensor.get());
+
+            TempSensor tempSensor = (TempSensor) sensorRepository.save(sensor.get());
+
+            SensorsModel sensorsModel = assembler.toModel(tempSensor);
+
+            sensorsModelList.add(sensorsModel);
+
+        }
+
+        if (!sensor.isPresent() || sensorsModelList.isEmpty()) {
+            throw new SensorEntitiesNotFoundException("Cannot Map Sensor to subclass");
+        }
+
+        CollectionModel collectionModel = CollectionModel.of(sensorsModelList,
+                linkTo(methodOn(SensorRestController.class).findAll()).withSelfRel());
+
+        return new ResponseEntity<>(collectionModel, HttpStatus.CREATED);
     }
 
-    @Override
-    public ResponseEntity<SensorsModel> update(Sensor payload, Long id) {
-        return null;
+    //@Override
+    public ResponseEntity<SensorsModel> update(Payload payload, Long id) {
+
+        Optional<Sensor> persistSensor = sensorRepository.findById(id).map(
+                sensor -> {
+                    if (sensor instanceof HumiditySensor) {
+
+                        HumiditySensor fromPersist = (HumiditySensor) sensor;
+                        HumiditySensor fromPayload = payload.getHumiditySensor();
+
+                        updateSensor(payload.getHumiditySensor(), fromPersist);
+
+                        if (fromPayload.getRelative() != null)
+                            fromPersist.setRelative(fromPayload.getRelative());
+
+                        if (fromPayload.getAbsolute() != null)
+                            fromPersist.setAbsolute(fromPayload.getAbsolute());
+
+                        return sensorRepository.save(fromPersist);
+
+                    } else if (sensor instanceof LightSensor) {
+
+                        LightSensor fromPersist = (LightSensor) sensor;
+                        LightSensor fromPayload = payload.getLightSensor();
+
+                        updateSensor(fromPayload, fromPersist);
+
+                        if (fromPayload.getLuminous() != null)
+                            fromPersist.setLuminous(fromPayload.getLuminous());
+
+                        if (fromPayload.getRadiometry() != null)
+                            fromPersist.setRadiometry(fromPayload.getRadiometry());
+
+                        return sensorRepository.save(fromPersist);
+
+                    } else if (sensor instanceof TempSensor) {
+
+                        TempSensor fromPersist = (TempSensor) sensor;
+                        TempSensor fromPayload = payload.getTempSensor();
+
+                        updateSensor(fromPayload, fromPayload);
+
+                        if (fromPayload != null)
+                            fromPersist.setTemp(fromPayload.getTemp());
+
+                        return sensorRepository.save(fromPersist);
+
+                    } else {
+                        throw new SensorEntitiesNotFoundException(String.format("sensor in abstract class and can not be saved or updated with out mapping to sub class "));
+                    }
+                }
+        );
+
+        if (!persistSensor.isPresent())
+            throw new SensorEntitiesNotFoundException(String.format("can not post or update"));
+
+        SensorsModel sensorsModel = assembler.toModel(persistSensor.get());
+
+        return new ResponseEntity<>(sensorsModel, HttpStatus.OK);
+
     }
 
-    private Sensor castSensor(Sensor sensor) {
+    private Location findLocation(Sensor sensor) {
+        return locationRepository
+                .findById(sensor.getLocation().getId())
+                .orElseThrow(
+                        () ->  new SensorEntitiesNotFoundException(String.format("sensors location is not found"))
+                );
+    }
 
-        if (sensor instanceof HumiditySensor) {
-            return (HumiditySensor) sensor;
-        }else if (sensor instanceof LightSensor) {
-            return (LightSensor) sensor;
-        } else {
-            return (TempSensor) sensor;
+    private void updateSensor(Sensor fromPayload, Sensor fromPersist){
+
+        try {
+
+            if (fromPayload.getMin() != null)
+                fromPersist.setMin(fromPayload.getMin());
+
+            if (fromPayload.getMax() != null)
+                fromPersist.setMax(fromPayload.getMax());
+
+            if (fromPayload.isActive() != null)
+                fromPersist.setActive(fromPayload.isActive());
+
+            if (fromPayload.getLocation().getId() != 0)
+                fromPersist.setLocation(findLocation(fromPayload));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
-*/
-
 
 }

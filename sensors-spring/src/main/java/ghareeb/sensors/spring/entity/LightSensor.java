@@ -1,6 +1,7 @@
 package ghareeb.sensors.spring.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  *  subclass of sensor
@@ -10,9 +11,11 @@ import javax.persistence.*;
 public class LightSensor extends Sensor {
 
     @Column(name = "radiometry")
+    @NotNull
     private Float radiometry;
 
     @Column(name = "luminous")
+    @NotNull
     private Float luminous;
 
     public LightSensor() {}
