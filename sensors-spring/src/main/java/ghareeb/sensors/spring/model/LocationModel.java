@@ -21,7 +21,7 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LocationModel extends RepresentationModel<LocationModel> {
 
-    private long id;
+    private Long id;
     private String name;
     private Boolean abnormalTemperature;
     private Boolean abnormalLight;
