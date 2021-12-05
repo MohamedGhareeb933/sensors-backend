@@ -8,7 +8,10 @@ import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
-// TODO DOCUMENT
+/**
+ * sensor Model class to Each sensor abstract class to child class
+ * then map each child/concrete class to Model class
+ */
 @Component
 public class SensorToModel {
 

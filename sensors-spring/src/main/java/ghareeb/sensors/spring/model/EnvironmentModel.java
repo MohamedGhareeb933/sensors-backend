@@ -8,11 +8,10 @@ import org.springframework.hateoas.server.core.Relation;
 
 import java.util.Set;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @JsonRootName(value = "environment")
 @Relation(collectionRelation = "environments")
 @JsonInclude(JsonInclude.Include.NON_NULL)

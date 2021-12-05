@@ -13,7 +13,14 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
-//TODO DOCUMENT THE ASSEMBLER CLASS AND EXPLAIN ITS LOGIC
+/**
+ * subclass of RepresentationModelAssemblerSupport
+ * has toModel Method that Convert sensor entity to SensorModel through calling mapping methods
+ * in sensortoModel class and add links to the Model
+ *
+ * has to CollectionModel that accepts list of sensors and Return SensorModel list
+ *
+ */
 @Component
 public class SensorsModelAssembler extends RepresentationModelAssemblerSupport<Sensor, SensorsModel> {
 

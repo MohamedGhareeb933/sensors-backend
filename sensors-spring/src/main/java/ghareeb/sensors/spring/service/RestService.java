@@ -9,7 +9,7 @@ public interface RestService<T, D> {
 
     ResponseEntity<CollectionModel<T>> findAll();
 
-    ResponseEntity<T> save(D payload);
+    ResponseEntity<CollectionModel<T>> save(D payload);
 
     ResponseEntity<T> update(D payload, Long id);
 }

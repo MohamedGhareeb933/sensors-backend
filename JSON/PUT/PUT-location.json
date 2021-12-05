@@ -1,7 +1,8 @@
 
 
 {
-    "_URL": "http://localhost:8080/location/id",
+    "_URL": "http://localhost:8080/locations/{id}",
+    "_ExasmpleURL": "http://localhost:8080/locations/1",
     "location": {
         "name": "salon",
         "abnormalTemperature": false,

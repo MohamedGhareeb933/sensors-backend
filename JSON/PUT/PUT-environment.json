@@ -1,7 +1,6 @@
-
-
 {
-"_URL": "http://localhost:8080/environment/id",
+    "_URL": "http://localhost:8080/environment/{id}",
+    "_ExampleURL": "http://localhost:8080/environment/1",
     "environment": {
         "alarm": true,
         "email": "ghareeb@gmail.com",

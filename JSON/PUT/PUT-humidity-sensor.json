@@ -1,7 +1,9 @@
 
 
 {
-    "_URL": "http://localhost:8080/humidity/id",
+    "_URL": "http://localhost:8080/sensors/{id}",
+    "_ExampleURL": "http://localhost:8080/sensors/1",
+
     "humiditySensor": {
         "min": 200,
         "max": 1500,

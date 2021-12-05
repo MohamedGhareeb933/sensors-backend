@@ -4,31 +4,5 @@
     "abnormalTemperature": false,
     "abnormalLight": false,
     "abnormalHumidity": false,
-    "environment" : { "id" : 11},
-    "HumiditySensor": [
-        {
-            "min": 900,
-            "max": 200,
-            "active": true,
-            "absolute": 43,
-            "relative": 25
-        }
-    ],
-    "LightSensor": [
-        {
-            "min": 100,
-            "max": 204,
-            "active": true,
-            "radiometry": 43,
-            "luminous": 25
-        }
-    ],
-    "TempSensor": [
-        {
-            "min": 106,
-            "max": 202,
-            "active": true,
-            "temp": 90
-        }
-    ]
+    "environment" : { "id" : 11}
 }

@@ -5,6 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+/**
+ * EntityNotFoundAdvise
+ * has Exception Handler of SensorEntitiesNotFoundException class
+ * has NotFound Method that return ResponseEntity of EntityNotFoundResponse that has
+ * message and time and status of Http
+ *
+ * return NotFound Response when throw
+ */
 @ControllerAdvice
 public class EntityNotFoundAdvise {
 

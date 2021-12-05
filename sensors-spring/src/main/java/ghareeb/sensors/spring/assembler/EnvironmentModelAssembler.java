@@ -20,7 +20,15 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-// TODO DOCUMENT
+/**
+ * subclass of representationModel that override toModel
+ * and using the mapping methods from EnvironmentToModel class
+ * and add links to each.
+ *
+ * has also toCollectionModel that accept Environment List
+ *
+ * and has toLocationModel that Map Location List to LocationModel List
+ */
 @Component
 public class EnvironmentModelAssembler extends RepresentationModelAssemblerSupport<Environment, EnvironmentModel> {
 

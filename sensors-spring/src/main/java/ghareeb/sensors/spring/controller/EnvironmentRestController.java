@@ -31,7 +31,7 @@ public class EnvironmentRestController  implements RestControllerHandler<Environ
 
 
     @PostMapping
-    public ResponseEntity<EnvironmentModel> save(@RequestBody Environment payload) {
+    public ResponseEntity<CollectionModel<EnvironmentModel>> save(@RequestBody Environment payload) {
         return environmentService.save(payload);
     }
 

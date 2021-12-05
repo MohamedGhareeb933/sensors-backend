@@ -14,6 +14,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
+
+
+/**
+ * Location Service Layer
+ *
+ * has for http Methods find/all Save and update
+ *
+ * find Method is : finding Persist Entity and Map it toModel then map to Response Entity.
+ *
+ * find all method is : finding all persist Entity and put them to CollectionModel List
+ * then Map to Repose Entity
+ *
+ * save Method is : save the Payload and Put it in CollecitonModel list
+ * then Map it to Response Entity
+ *
+ * update method is : check for every Property in the payload and update if the property exist.
+ * then map to EntityModel then return ReposnseEntity of ok
+ */
 
 @Service("locationService")
 public class LocationService  implements RestService<LocationModel, Location>  {
@@ -40,15 +59,20 @@ public class LocationService  implements RestService<LocationModel, Location>  {
     }
 
     @Override
-    public ResponseEntity<LocationModel> save(Location payload) {
-        
-        Environment persistEnvironment = findEnvironment(payload);
+    public ResponseEntity<CollectionModel<LocationModel>> save(Location payload) {
 
-        persistEnvironment.add(payload);
+        if (payload.getEnvironment() != null) {
 
-        LocationModel location = assembler.toModel(locationRepository.save(payload));
-        return ResponseEntity.created(location.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(location);
+            Environment persistEnvironment = findEnvironment(payload);
+
+            persistEnvironment.add(payload);
+        }
+
+        locationRepository.save(payload);
+
+        CollectionModel collectionModel =  assembler.toCollectionModel(Arrays.asList(payload));
+
+        return new ResponseEntity<>(collectionModel, HttpStatus.CREATED);
     }
     
     @Override
@@ -58,7 +82,7 @@ public class LocationService  implements RestService<LocationModel, Location>  {
 
         LocationModel locationModel = assembler.toModel(persistLocation);
 
-        return new ResponseEntity<>(locationModel, HttpStatus.CREATED);
+        return new ResponseEntity<>(locationModel, HttpStatus.ACCEPTED);
     }
 
     private Location findLocation(Location payload, Long id) {
@@ -83,10 +107,9 @@ public class LocationService  implements RestService<LocationModel, Location>  {
 
     // find Environment property by id and add location to environment if the location is added by itself
     private Environment findEnvironment(Location payload) {
-
-        Long id = payload.getEnvironment().getId();
-        return environmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.format("Environment with id:%s is not found or might not be exist", id)));
+            Long id = payload.getEnvironment().getId();
+            return environmentRepository.findById(id)
+                    .orElseThrow(() -> new EntityNotFoundException(String.format("Environment with id:%s is not found or might not be exist", id)));
     }
 
 }

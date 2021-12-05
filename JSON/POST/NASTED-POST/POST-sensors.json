@@ -1,0 +1,32 @@
+{
+    "_POST-URL": "localhost:8080/sensors",
+    "HumiditySensor": {
+        "min": 900,
+        "max": 200,
+        "active": true,
+        "absolute": 43,
+        "relative": 25,
+        "location": {
+            "id": 1
+        }
+    },
+    "LightSensor": {
+        "min": 100,
+        "max": 204,
+        "active": true,
+        "radiometry": 43,
+        "luminous": 25,
+        "location": {
+            "id": 1
+        }
+    },
+    "TempSensor": {
+        "min": 106,
+        "max": 202,
+        "active": true,
+        "temp": 90,
+        "location": {
+            "id": 1
+        }
+    }
+}

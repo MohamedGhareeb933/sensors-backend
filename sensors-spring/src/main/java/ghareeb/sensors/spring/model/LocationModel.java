@@ -12,7 +12,6 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @JsonRootName(value = "location")
 @Relation(collectionRelation = "locations")
 @JsonInclude(JsonInclude.Include.NON_NULL)

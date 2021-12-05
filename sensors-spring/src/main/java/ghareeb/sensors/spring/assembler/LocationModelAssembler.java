@@ -18,7 +18,15 @@ import java.util.stream.Collectors;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-// TODO DOCUMENT
+/**
+ * subclass of representation Model assembler
+ * and call LocationToModel class to map each Location Entity to Location Model
+ * then add links to LocationModel
+ *
+ * has also toCollectionModel that accepts List of Location
+ *
+ * has to SensorModel that map Sensor List to Sensor Model by calling methods in SensorToModel.
+ */
 @Component
 public class LocationModelAssembler extends RepresentationModelAssemblerSupport<Location, LocationModel> {
 

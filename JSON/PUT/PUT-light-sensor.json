@@ -1,5 +1,6 @@
 {
-    "_URL": "http://localhost:8080/light/id",
+    "_URL": "http://localhost:8080/sensors/id",
+    "_ExampleURL": "http://localhost:8080/sensors/id",
     "lightSensor": {
         "min": 10,
         "max": 20,

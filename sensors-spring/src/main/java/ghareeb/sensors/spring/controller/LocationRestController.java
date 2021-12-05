@@ -30,12 +30,12 @@ public class LocationRestController implements RestControllerHandler<LocationMod
     }
 
     @PostMapping
-    public ResponseEntity<LocationModel> save(@RequestBody Location payload) {
+    public ResponseEntity<CollectionModel<LocationModel>> save(@RequestBody Location payload) {
         return restService.save(payload);
     }
 
-    @PutMapping
-    public ResponseEntity<LocationModel> update(@RequestBody Location payload, Long id) {
+    @PutMapping("/{id}")
+    public ResponseEntity<LocationModel> update(@RequestBody Location payload, @PathVariable Long id) {
         return restService.update(payload, id);
     }
 

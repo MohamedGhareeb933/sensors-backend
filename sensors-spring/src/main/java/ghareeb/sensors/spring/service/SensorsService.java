@@ -21,8 +21,29 @@ import java.util.Optional;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+
+/**
+ * Sensor Service Layer
+ *
+ * has for http Methods find/all Save and update
+ *
+ * find Method is : finding Persist Entity and Map it toModel then map to Response Entity.
+ *
+ * find all method is : finding all persist Entity and put them to CollectionModel List
+ * then Map to Repose Entity
+ *
+ * save Method is : check if each of subclass is exists in the payload
+ * if It's there then add it to location then save it
+ * and then add it to SensorModel list
+ * finally return Response Entity of CollectionModel of http status.
+ *
+ * update method is : check for every Property in the payload and find persist and if the entity
+ * in persist is instance of subclass.
+ * update persist class from payload and return ReponseEntity of SensorModel wth Httpstatus.
+ */
+
 @Service("sensorService")
-public class SensorsService /* TODO implements  RestService<SensorsModel, Payload> */ {
+public class SensorsService implements RestService<SensorsModel, Payload>  {
 
     @Autowired
     LocationRepository locationRepository;
@@ -33,7 +54,7 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
     @Autowired
     SensorsModelAssembler assembler;
 
-    //@Override
+    @Override
     public ResponseEntity<SensorsModel> find(Long id) {
 
             Optional sensor =  sensorRepository.findById(id);
@@ -46,7 +67,7 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
             return new ResponseEntity<>(sensorsModel, HttpStatus.OK);
     }
 
-    //@Override
+    @Override
     public ResponseEntity<CollectionModel<SensorsModel>> findAll() {
 
          List<Sensor> sensors = sensorRepository.findAll();
@@ -55,7 +76,7 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
          return new ResponseEntity<>(sensorsModels, HttpStatus.OK);
     }
 
-    //@Override
+    @Override
     public ResponseEntity<CollectionModel<SensorsModel>> save(Payload payload) {
 
         List<SensorsModel> sensorsModelList = new ArrayList<>();
@@ -63,10 +84,13 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
         Optional<Sensor> sensor = Optional.empty();
 
         if (payload.getHumiditySensor() != null) {
+
             sensor = Optional.of((HumiditySensor) payload.getHumiditySensor());
 
-            Location location = findLocation(sensor.get());
-            location.add(sensor.get());
+            if (sensor.get().getLocation() != null) {
+                Location location = findLocation(sensor.get());
+                location.add(sensor.get());
+            }
 
             HumiditySensor humiditySensor = (HumiditySensor) sensorRepository.save(sensor.get());
 
@@ -74,14 +98,14 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
 
             sensorsModelList.add(sensorsModel);
 
-
         }
         if (payload.getLightSensor() != null) {
             sensor = Optional.of((LightSensor) payload.getLightSensor());
 
-            Location location = findLocation(sensor.get());
-            location.add(sensor.get());
-
+            if (sensor.get().getLocation() != null) {
+                Location location = findLocation(sensor.get());
+                location.add(sensor.get());
+            }
             LightSensor lightSensor = (LightSensor) sensorRepository.save(sensor.get());
 
             SensorsModel sensorsModel = assembler.toModel(lightSensor);
@@ -93,8 +117,10 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
         if (payload.getTempSensor() != null){
             sensor = Optional.of((TempSensor) payload.getTempSensor());
 
-            Location location = findLocation(sensor.get());
-            location.add(sensor.get());
+            if (sensor.get().getLocation() != null) {
+                Location location = findLocation(sensor.get());
+                location.add(sensor.get());
+            }
 
             TempSensor tempSensor = (TempSensor) sensorRepository.save(sensor.get());
 
@@ -114,7 +140,7 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
         return new ResponseEntity<>(collectionModel, HttpStatus.CREATED);
     }
 
-    //@Override
+    @Override
     public ResponseEntity<SensorsModel> update(Payload payload, Long id) {
 
         Optional<Sensor> persistSensor = sensorRepository.findById(id).map(
@@ -172,7 +198,7 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
 
         SensorsModel sensorsModel = assembler.toModel(persistSensor.get());
 
-        return new ResponseEntity<>(sensorsModel, HttpStatus.OK);
+        return new ResponseEntity<>(sensorsModel, HttpStatus.ACCEPTED);
 
     }
 
@@ -197,7 +223,7 @@ public class SensorsService /* TODO implements  RestService<SensorsModel, Payloa
             if (fromPayload.isActive() != null)
                 fromPersist.setActive(fromPayload.isActive());
 
-            if (fromPayload.getLocation().getId() != 0)
+            if (fromPayload.getLocation() != null)
                 fromPersist.setLocation(findLocation(fromPayload));
 
         } catch (Exception e) {

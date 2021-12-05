@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+/**
+* EnvironmentModel class that map each Environment entity to Model class
+ * has method overloading for Location model List
+* */
 @Component
 public class EnvironmentToModel {
 
@@ -22,7 +26,6 @@ public class EnvironmentToModel {
                 .name(environment.getName())
                 .alarm(environment.isAlarm())
                 .build();
-
     }
 
     public EnvironmentModel environmentEntityToModel(Environment environment, Set<LocationModel> locations) {

@@ -12,8 +12,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * Environment Service Layer
+ *
+ * has for http Methods find/all Save and update
+ *
+ * find Method is : finding Persist Entity and Map it toModel then map to Response Entity.
+ *
+ * find all method is : finding all persist Entity and put them to CollectionModel List
+ * then Map to Repose Entity
+ *
+ * save Method is : save the Payload and Put it in CollecitonModel list
+ * then Map it to Response Entity
+ *
+ * update method is : check for every Property in the payload and update if the property exist.
+ * then map to EntityModel then return ReposnseEntity of ok
+ */
 @Service("environmentService")
 public class EnvironmentService implements RestService<EnvironmentModel, Environment> {
 
@@ -44,12 +63,14 @@ public class EnvironmentService implements RestService<EnvironmentModel, Environ
     }
 
     @Override
-    public ResponseEntity<EnvironmentModel> save(Environment payload) {
+    public ResponseEntity<CollectionModel<EnvironmentModel>> save(Environment payload) {
 
-        EnvironmentModel environment = assembler.toModel(environmentRepository.save(payload));
+        environmentRepository.save(payload);
 
-        return ResponseEntity.created(environment.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(environment);
+        CollectionModel collectionModel = assembler.toCollectionModel(Arrays.asList(payload));
+
+        return new ResponseEntity<>(collectionModel, HttpStatus.CREATED);
+
     }
 
     @Override
@@ -66,12 +87,12 @@ public class EnvironmentService implements RestService<EnvironmentModel, Environ
                     if (payload.getLocations() != null) environment.setLocations(payload.getLocations());
 
                     return environmentRepository.save(environment);
-                }).get();
+                }).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Can not find or update Environment ")));
 
         EnvironmentModel entityEnvironment = assembler.toModel(persistEnvironment);
 
-        return ResponseEntity.created(entityEnvironment.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(entityEnvironment);
+        return new ResponseEntity<>(entityEnvironment, HttpStatus.OK);
     }
 
 
